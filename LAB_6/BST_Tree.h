@@ -32,6 +32,7 @@ public:
     }
 
     static void insert(BST_Node* node, int key);
+    static void deleteNode(BST_Node* node);
 
     static void printNodePreOrder(BST_Node* node);
     static void printNodeInOrder(BST_Node* node);
@@ -65,6 +66,50 @@ void BST_Node::insert(BST_Node* node, int key){
                 return;
             }
         }
+    }
+}
+
+void BST_Node::deleteNode(BST_Node* node){
+    // leaf
+    if(node->left == nullptr && node->right == nullptr){
+        BST_Node* tmp = node;
+
+        BST_Node* p = node->parent;
+        // delete node
+        if(p->right == node){
+            p->right = nullptr;
+        }
+        else{
+            p->left = nullptr;
+        }
+        delete tmp;
+        return;
+    }
+    // if single child
+    // replace value and delete child
+    if((node->left == nullptr && node->right != nullptr) || (node->left != nullptr && node->right == nullptr) ){
+        if(node->left){
+            node->key = node->right->key;
+            BST_Node* temp = node->right;
+            delete temp;
+            node->right = nullptr;
+        }
+        else{
+            node->key = node->left->key;
+            BST_Node* temp = node->left;
+            delete temp;
+            node->left = nullptr;
+        }
+
+        return;
+    }
+
+    // 3rd case
+    if(node->parent->right == node){
+        // right child
+        BST_Node* repNode = BST_Node::inOrderPredeccessor(node);
+        node->key = repNode->key;   // copy node (key)
+        BST_Node::deleteNode(repNode);
     }
 }
 

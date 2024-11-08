@@ -1,0 +1,16 @@
+
+wstawianie po
+
+Node -> `Node` -> Node -> nullptr
+
+new.next = next
+node.next = new
+
+-------
+
+tmp = old value
+old value = new value
+new value = tmp
+
+wstaw po
+

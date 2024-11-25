@@ -43,6 +43,8 @@ public:
 
     static BST_Node* inOrderSuccessor(BST_Node* node);
     static BST_Node* inOrderPredeccessor(BST_Node* node);
+
+    static int maxDepth(BST_Node* node);
 };
 
 void BST_Node::insert(BST_Node* node, int key){
@@ -215,5 +217,16 @@ BST_Node* BST_Node::inOrderPredeccessor(BST_Node* node){
 
     return ptr;
 }
+
+int BST_Node::maxDepth(BST_Node* node){
+    if(node == nullptr)
+        return 0;
+
+    int l = maxDepth(node->left);
+    int r = maxDepth(node->right);
+
+    return std::max(l,r)+1;
+}
+
 
 #endif
